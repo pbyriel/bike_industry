@@ -16,20 +16,24 @@ class Bicycle(object):
 
 
 class Bike_shop(object):
-    """Bike_shop takes 3 arguments: name (string), stock (list of Bicycle instances) and margin (as percent)"""
-    def __init__(self, name, stock, margin=20):
+    """Bike_shop takes 3 arguments: name (string), inventory (list of Bicycle instances) and margin (as percent)"""
+    def __init__(self, name, inventory, margin=20):
         self.name = name
-        self.stock = stock.copy() #makes shallow copy to not affect orig. bikes
-        for bike in self.stock:
+        self.inventory = inventory.copy() #makes shallow copy to not affect orig. bikes
+        for bike in self.inventory:
             bike.salesprice = bike.cost * (1 + margin/100)
-            #bike.stock = 1
+            bike.stock = 1
         self.profits = 0
         
     def sell(self, bike):
         self.profits += bike.salesprice
-        self.stock.remove(bike) # should be able to reduce stock instead
-    # func to print stock
-    # func to see profits
+        bike.stock -= 1 
+        
+    def print_status(self):
+        for bike in self.inventory:
+            pass #TODO inventory + self.profit
+
+    #func to buy more bikes
             
 
 class Customer(object):
