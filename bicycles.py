@@ -20,16 +20,19 @@ class Bike_shop(object):
             bike.profit = bike.salesprice - bike.cost
             bike.stock = 1
         self.profits = 0
+        #TODO Would it be better to use dict to keep track of model and stock?
+        # And what would __init__ and a buy method have to look like?
         
     def sell(self, bike):
         self.profits += bike.profit
         bike.stock -= 1 
+
         
     def print_status(self):
         print("Inventory status:")
         for bike in self.inventory:
             print("Model: {} - in stock: {}".format(bike.model, bike.stock))
-        print("Total profits: ${}".format(int(self.profits)))
+        print("Total profits: ${}".format(round(self.profits,2)))
         print()
 
     #TODO func to buy more bikes
