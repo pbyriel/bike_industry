@@ -12,13 +12,13 @@ def main():
     customer2 = Customer("Julia", 500)
     customer3 = Customer("Nana", 1000)
     
-    citybikes_stock = [bike1, bike2, bike3, bike4, bike5, bike6]
-    citybikes = Bike_shop("City Bikes", citybikes_stock, 15)
-    citybikes.print_status()
-    customer1.buy(bike6, citybikes)
-    customer2.buy(bike4, citybikes)
-    customer3.buy(bike3,citybikes)
-    citybikes.print_status()
+    shop_stock = [bike1, bike2, bike3, bike4, bike5, bike6]
+    shop = Bike_shop("Bike Living", shop_stock, 15)
+    shop.print_status()
+    customer1.buy(bike6, shop)
+    customer2.buy(bike4, shop)
+    customer3.buy(bike3,shop)
+    shop.print_status()
     
 if __name__=='__main__':
     main()
