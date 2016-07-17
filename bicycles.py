@@ -20,9 +20,10 @@ class Manufacturer(object):
         self.type = type
 
 
-    def make_bike(self, model, kilo, cost_of_bike):
-        bike_produced = Bicycle(model, kilo, cost=cost_of_bike*(1 + self.margin/100), brand=self.name)
-        return bike_produced
+    def make_bike(self, model, kilos, cost):
+        bike = Bicycle(model, kilos, cost=cost*(1 + self.margin/100), brand=self.name)
+        print(bike.cost)
+        return bike
 
 
 
@@ -32,17 +33,16 @@ class Sportsbikes(Manufacturer):
         # MENTOR: I don't understand why I have to provide arguments to super
     
     
-    def make_fast_bike(self):
-        super(Sportsbikes, self).make_bike(model="Fast bike", kilo=6, cost_of_bike=100)
+    def make_mountain_bike(self):
+       return super(Sportsbikes, self).make_bike(model="Mountain bike", kilos=6, cost=200)
     
     
     def make_racing_bike(self):
-        super(Sportsbikes, self).make_bike(model="Racing bike", kilo=5, cost_of_bike=120)
+        return super(Sportsbikes, self).make_bike(model="Racing bike", kilos=5, cost=300)
 
 
     def make_pro_bike(self):
-        super(Sportsbikes, self).make_bike(model="Pro bike", kilo=4.5, cost_of_bike=130)
-    #Whats the best way to get these into a list?
+       return super(Sportsbikes, self).make_bike(model="Pro bike", kilos=4.5, cost=400)
 
 
 
@@ -51,40 +51,29 @@ class Citybikes(Manufacturer):
         super(Citybikes, self).__init__(name=None, margin=30, type="City bikes manufacturer")
 
 
-    def make_fast_bike(self):
-        super(Citybikes, self).make_bike(model="Urban", kilo=6, cost_of_bike=80)
+    def make_urban_bike(self):
+        return super(Citybikes, self).make_bike(model="Urban", kilos=6, cost=250)
     
     
-    def make_commuter_bike(self):
-        super(Citybikes, self).make_bike(model="Commuter bike", kilo=5, cost_of_bike=90)   
+    def make_child_bike(self):
+        return super(Citybikes, self).make_bike(model="Children's tricycle", kilos=4, cost=200)   
 
 
-    def make_shopper_bike(self):
-        super(Citybikes, self).make_bike(model="Shopper bike", kilo=4.5, cost_of_bike=100)
-    #Whats the best way to get these into a list?
+    def make_electric_bike(self):
+        return super(Citybikes, self).make_bike(model="Electric rider", kilos=9, cost=800)
 
 
 
 class Bike_shop(object):
     """Bike_shop takes 4 arguments: name (string), inventory (list of Bicycle instances) and margin (as percent)"""
-    def __init__(self, name, inventory=[], capital=5000, margin=20):
+    def __init__(self, name, inventory=[], capital=5000, margin=20, profits=0):
         self.name = name
         self.inventory = inventory
         self.capital = capital
         self.margin = margin
-        for bike in self.inventory:
-            bike.salesprice = bike.cost * (1 + margin/100)
-            bike.profit = bike.salesprice - bike.cost
-            bike.stock = 1 #should refer to number from bought bikes 
-        self.profits = 0
+        self.profits = profits
         #TODO Would it be better to use dict to keep track of model and stock?
         # And what would __init__ and a buy method have to look like?
-
-
-    def sell(self, bike):
-        self.profits += bike.profit
-        self.capital += bike.salesprice
-        bike.stock -= 1 
 
 
     def print_status(self):
@@ -97,12 +86,20 @@ class Bike_shop(object):
 
 
     def buy(self, bikes):
+        print(bikes)
         for bike in bikes:
             bike.salesprice = bike.cost * (1 + self.margin/100)
             bike.profit = bike.salesprice - bike.cost
-            bike.stock = 1 #should refer to number from bought bikes 
+            bike.stock = 1 
             self.inventory.append(bike)
             self.capital -= bike.cost
+            
+
+    def sell(self, bike):
+        self.profits += bike.profit
+        self.capital += bike.salesprice
+        bike.stock -= 1 
+        #TODO stock is actually wrong if bike bought before
    
 
 
